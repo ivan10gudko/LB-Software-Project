@@ -6,4 +6,10 @@
   img int
   friends  list(id, user(object))
   watchlist(1 list, but 1 list with statuses, filter)
+
  */
+ title entity
+ id
+ titleName
+status 
+rating
