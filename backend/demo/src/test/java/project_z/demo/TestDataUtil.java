@@ -7,7 +7,7 @@ import project_z.demo.entity.UserEntity;
 public class TestDataUtil {
 public static UserEntity createTestUserA(){
 return UserEntity.builder()
-.Id(1)
+.id(1)
 .name("Genadiy")
 .description("Natural")
 .img(52)

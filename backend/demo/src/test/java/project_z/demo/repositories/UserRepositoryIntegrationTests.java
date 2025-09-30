@@ -16,11 +16,10 @@ import project_z.demo.entity.UserEntity;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode=DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class UserRepositoryIntegrationTests {
-    private UserRepository underTest;
     @Autowired
-    public UserRepositoryIntegrationTests(UserRepository underTest){
-        this.underTest = underTest;
-    }
+    private UserRepository underTest;
+    
+    
 @Test
 public void testThatCreateNewUser(){
     UserEntity user = TestDataUtil.createTestUserA();
@@ -31,5 +30,8 @@ public void testThatCreateNewUser(){
     .usingRecursiveComparison()
     .ignoringFields("id", "friendsList", "watchList")
     .isEqualTo(user);
+    
 }
+
 }
+

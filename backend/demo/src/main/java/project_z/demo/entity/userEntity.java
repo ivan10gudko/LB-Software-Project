@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 public class UserEntity {
     @Id
-    private int Id;
+    private int id;
     private String name;
     private String description;
     private int img;
