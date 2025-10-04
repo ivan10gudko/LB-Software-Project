@@ -1,5 +1,13 @@
+import { useEffect } from "react";
+import HeroSection from "~/components/Home/HeroSection";
+
+
 const Home : React.FC = ()=> {
-    return ( <>Home</> );
+
+    return ( <>
+        <HeroSection />
+        </>
+        );
 }
 
 export default Home;
