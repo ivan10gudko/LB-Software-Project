@@ -9,7 +9,7 @@ export async function getTopAnimeList(){
 
     try {
 	    const response = await axios.request(options);
-	    console.log(response.data.data);
+	    return response.data.data;
     } catch (error) {
 	    console.error(error);
     }
@@ -24,7 +24,7 @@ export async function getTopAnime(){
 
     try {
 	    const response = await axios.request(options);
-	    console.log(response.data.data[0]);
+	    return response.data.data[0];
     } catch (error) {
 	    console.error(error);
     }
@@ -39,7 +39,7 @@ export async function getAnimeById(id:number){
 
     try {
 	    const response = await axios.request(options);
-	    console.log(response.data.data);
+	    return response.data.data;
     } catch (error) {
 	    console.error(error);
     }
@@ -53,7 +53,7 @@ export async function getSeasonNow(){
 
     try {
 	    const response = await axios.request(options);
-	    console.log(response.data.data);
+	    return response.data.data;
     } catch (error) {
 	    console.error(error);
     }
@@ -67,7 +67,7 @@ const options = {
 
 try {
 	const response = await axios.request(options);
-	console.log(response.data.data);
+	return response.data.data;
 } catch (error) {
 	console.error(error);
 }
@@ -83,7 +83,7 @@ const options = {
 
 try {
 	const response = await axios.request(options);
-	console.log(response.data.data);
+	return response.data.data;
 } catch (error) {
 	console.error(error);
 }
