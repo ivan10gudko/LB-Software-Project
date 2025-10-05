@@ -2,7 +2,7 @@ import React from "react";
 
 const HeroSkeleton: React.FC = () => {
   return (
-    <div className="w-full flex h-[88vh] flex-row-reverse relative animate-pulse bg-black text-white">
+    <div className="w-full flex h-[88vh] flex-row-reverse relative *:animate-pulse bg-black text-white">
       {/* Фон */}
       <div className="w-1/2 h-full bg-gray-800"></div>
 
