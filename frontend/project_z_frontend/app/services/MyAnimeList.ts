@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { Anime } from './MyAnimeList.types';
 
 export async function getTopAnimeList(){
 
