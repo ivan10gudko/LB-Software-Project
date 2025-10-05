@@ -10,7 +10,7 @@ function Header() {
     const [isLogged, setIsLogged] = useState<boolean>(false);
     const [burgerMenuOpen,setBurgerMenuOpen] = useState<boolean>(false);
 
-    const burgerMenuStyles = useMemo(()=> burgerMenuOpen ? "border-t-1 bg-black/80  backdrop-blur-sm absolute top-17 w-full left-0 h-full clip flex justify-center pt-4 text-white" : "hidden",[burgerMenuOpen]);
+    const burgerMenuStyles = useMemo(()=> burgerMenuOpen ? "border-t-1 bg-black/60  backdrop-blur-sm absolute top-17 w-full left-0 h-full clip flex justify-center pt-4 text-white z-1000" : "hidden",[burgerMenuOpen]);
 
     return (
         <header className="py-4 px-6 *:text-sm *:md:text-md md:px-14 w-full border-b flex justify-between items-center">

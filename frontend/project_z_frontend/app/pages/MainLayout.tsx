@@ -1,14 +1,18 @@
 import { Outlet } from "react-router";
 import Header from "../components/Header";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function MainLayout() {
+    const queryClient = new QueryClient();
     return (
-        <div className="app">
-            <Header />
-            <main>
-                <Outlet />
-            </main>
-        </div>
+        <QueryClientProvider client={queryClient}>
+            <div className="app font-industrial">
+                <Header />
+                <main>
+                    <Outlet />
+                </main>
+            </div>
+        </QueryClientProvider>
     );
 }
 

@@ -3,6 +3,7 @@
 
 @theme {
     --font-inter: "Inter", sans-serif;
+    --font-industrial: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
 }
 
 body{
