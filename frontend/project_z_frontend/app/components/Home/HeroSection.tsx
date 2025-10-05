@@ -11,18 +11,15 @@ import type { Anime } from "~/services/MyAnimeList.types";
 const HeroSection: React.FC<{}> = () => {
     const { isPending, error, data } = useSuspenseQuery<Anime>({
         queryKey: ["hero_section", "top_anime"],
-        queryFn: async () => {
-            const res = await getTopAnime();
-            console.log(res);
-            
-            return res;
-        },
+        queryFn: getTopAnime,
     });
+
+    if (!data) return null;
 
 return (
     <div className="w-full flex h-[88vh] flex-row-reverse relative">
         <img
-            src={data.trailer.images.maximum_image_url}
+            src={data.trailer?.images?.maximum_image_url ?? "/placeholder.jpg"}
             alt={`Top Rated Anime: ${data.title_english}`}
         />
         <div className="bg-black w-full"></div>
@@ -45,11 +42,12 @@ return (
                             )
                     )}
                 </div>
-                <HeroDescription id={data.mal_id}>
+                {data.synopsis ? <HeroDescription id={data.mal_id}>
                     {data.synopsis}
-                </HeroDescription>
+                </HeroDescription> : null }
+                
                 <div className="flex gap-8 my-4">
-                    <Button color="white"><a href={data.trailer.embed_url}>Watch Trailer</a></Button>
+                    {data.trailer.embed_url ? <Button color="white"><a href={data.trailer.embed_url}>Watch Trailer</a></Button>:null}
                     <Button className="bg-amber-400 "><Link to={`/anime/${data.mal_id}`}>Learn more</Link></Button>
                 </div>
             </div>
