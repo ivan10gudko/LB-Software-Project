@@ -28,10 +28,29 @@ public void testThatCreateNewUser(){
     assertThat(result).isPresent();
     assertThat (result.get())
     .usingRecursiveComparison()
-    .ignoringFields("id", "friendsList", "watchList")
+    .ignoringFields("id" ,"friendsList", "watchList")
     .isEqualTo(user);
     
 }
-
+@Test 
+public void testThatUpdateUser(){
+    UserEntity user = TestDataUtil.createTestUserA();
+    underTest.save(user);
+    user.setName("UPDATED");
+    underTest.save(user);
+    Optional <UserEntity> result = underTest.findById(user.getId());
+    assertThat(result).isPresent();
+    assertThat(result.get()).usingRecursiveComparison()
+    .ignoringFields("id" ,"friendsList", "watchList")
+    .isEqualTo(user);
+}
+@Test
+public void testThatDeleteUser(){
+    UserEntity user = TestDataUtil.createTestUserA();
+    underTest.save(user);
+    underTest.deleteById(user.getId());
+    Optional <UserEntity> result = underTest.findById(user.getId());
+    assertThat(result).isEmpty();
+}
 }
 

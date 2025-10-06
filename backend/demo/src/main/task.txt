@@ -13,3 +13,7 @@
  titleName
 status 
 rating
+
+translate me to front
+translate find me to api or google translate
+!!!!replace an entity object in titleEntity by an userId!!!!

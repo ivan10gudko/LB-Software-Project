@@ -1,6 +1,7 @@
 package project_z.demo.entity;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity
 
 @Table(name="titles")
-
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class TitleEntity { public enum titleStatus {
     WATCHED,
     FAVOURITE,
@@ -32,7 +33,7 @@ public class TitleEntity { public enum titleStatus {
     private float titleRating;
     @Enumerated(EnumType.STRING)
     private titleStatus status;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id" )
     private UserEntity user;
 }

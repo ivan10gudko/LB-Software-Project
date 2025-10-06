@@ -1,6 +1,9 @@
 package project_z.demo.entity;
 
 import java.util.List;
+import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
@@ -18,16 +21,18 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class UserEntity {
     @Id
-    private int id;
+    
+    private UUID id;
     private String name;
     private String description;
     private int img;
     @ElementCollection
     private List<String> friendsList;
-    @OneToMany(cascade = CascadeType.ALL)
-    
+  
+    @OneToMany( mappedBy= "user", cascade=CascadeType.ALL, orphanRemoval=true) 
     private List<TitleEntity> watchList;
 
 
