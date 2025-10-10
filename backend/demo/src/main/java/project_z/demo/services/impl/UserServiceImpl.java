@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 @Override
-public UserEntity createUser(UserEntity userEntity){
+public UserEntity save(UserEntity userEntity){
     return userRepository.save(userEntity);
     
 }
@@ -26,4 +26,9 @@ public Optional<UserEntity> findOne(UUID id){
 
 return  userRepository.findById(id);
 }
+@Override
+public boolean isExists(UUID id) {
+    return userRepository.existsById(id);
+}
+
 }

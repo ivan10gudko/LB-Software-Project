@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class TitleController {
 private Mapper<TitleEntity, TitleDto> titleMapper;
 @Autowired
 private TitleService titleService;
-@PutMapping("/Titles")
+@PostMapping("/Titles")
 public ResponseEntity <TitleDto> createTitle (
     @RequestBody TitleDto titleDto) {
    TitleEntity titleEntity = titleMapper.mapFrom(titleDto);
@@ -55,5 +56,10 @@ public ResponseEntity<TitleDto> getTitle(@PathVariable("titleId") int titleId) {
     }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
 }
-
+@PutMapping(path = "/Titles")
+public String putMethodName(@PathVariable String id, @RequestBody String entity) {
+    //TODO: process PUT request
+    
+    return null;
+}
 }

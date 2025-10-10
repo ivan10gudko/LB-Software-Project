@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +16,7 @@ import project_z.demo.Mappers.Mapper;
 import project_z.demo.dto.UserDto;
 import project_z.demo.entity.UserEntity;
 import project_z.demo.services.UserService;
+
 
 
     
@@ -32,7 +34,7 @@ public class UserController {
     @PostMapping(path = "/Users")
     public ResponseEntity <UserDto> createUser(@RequestBody UserDto user) {
         UserEntity userEntity = userMapper.mapFrom(user);
-        UserEntity savedUserEntity = userService.createUser(userEntity);
+        UserEntity savedUserEntity = userService.save(userEntity);
        return new ResponseEntity<>( userMapper.mapTo(savedUserEntity), HttpStatus.CREATED);
         
       
@@ -45,5 +47,16 @@ public class UserController {
             return new ResponseEntity<>(userDto, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    
+    @PutMapping(path  = "/Users/{Id}")
+    public ResponseEntity<UserDto> fullUpdateUser(
+        @PathVariable("Id") UUID id,
+        @RequestBody UserDto userDto) {
+        if(!userService.isExists(id)){
+            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        userDto.setId(id);
+        UserEntity userEntity = userMapper.mapFrom(userDto);
+    UserEntity savedUserEntity =  userService.save(userEntity);
+      return new ResponseEntity<> (userMapper.mapTo(userEntity), HttpStatus.OK);
+    }
 }

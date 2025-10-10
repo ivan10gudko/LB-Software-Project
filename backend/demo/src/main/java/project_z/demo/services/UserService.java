@@ -6,6 +6,7 @@ import java.util.UUID;
 import project_z.demo.entity.UserEntity;
 
 public interface UserService {
-    public UserEntity createUser(UserEntity user);
+    public UserEntity save(UserEntity user);
     Optional<UserEntity> findOne(UUID id);
+    boolean isExists(UUID id);
 }
