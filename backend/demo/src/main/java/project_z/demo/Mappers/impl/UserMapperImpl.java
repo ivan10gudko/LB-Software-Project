@@ -1,8 +1,9 @@
-package project_z.demo.Mappers;
+package project_z.demo.Mappers.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import project_z.demo.Mappers.Mapper;
 import project_z.demo.dto.UserDto;
 import project_z.demo.entity.UserEntity;
 @Component

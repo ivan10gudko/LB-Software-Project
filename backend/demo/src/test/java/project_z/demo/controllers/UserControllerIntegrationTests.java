@@ -31,11 +31,33 @@ public class UserControllerIntegrationTests {
         UserEntity testUserA = TestDataUtil.createTestUserA();
         String userJson = objectMapper.writeValueAsString(testUserA);
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/users")
+            MockMvcRequestBuilders.post("/Users")
             .contentType(MediaType.APPLICATION_JSON)
             .content(userJson)
         ).andExpect(
             MockMvcResultMatchers.status().isCreated()
+        );
+    }
+        @Test
+    public void testThatCreateUserAndReturnsCreatedUser() throws Exception{
+        UserEntity testUserA = TestDataUtil.createTestUserA();
+        String userJson = objectMapper.writeValueAsString(testUserA);
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/Users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(userJson)
+        ).andExpect(
+            MockMvcResultMatchers.jsonPath("$.id").value("c91438ea-8288-4584-898b-c8a6c33a8e07")
+        ).andExpect(
+        MockMvcResultMatchers.jsonPath("$.name").value("Genadiy")
+        ).andExpect(
+            MockMvcResultMatchers.jsonPath("$.description").value("Natural")
+        ).andExpect(
+             MockMvcResultMatchers.jsonPath("$.img").value(52)
+        ).andExpect(
+            MockMvcResultMatchers.jsonPath("$.friendsList").isEmpty()
+        ).andExpect(
+            MockMvcResultMatchers.jsonPath("$.watchList").isEmpty()
         );
     }
 }

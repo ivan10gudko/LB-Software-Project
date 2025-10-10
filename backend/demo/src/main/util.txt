@@ -8,3 +8,21 @@ json to post
      "friendsList" : [],
      "watchList" : []
 }
+
+
+
+import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.spi.MappingContext;
+
+
+
+
+{
+    "titleId" : "1",
+    "titleName" : "AOT",
+    "titleRating": 9,
+    "status" : "WATCHED",
+    "userId": "c91438ea-8288-4584-898b-c8a6c33a8e07"
+
+}

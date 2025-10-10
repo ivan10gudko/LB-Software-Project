@@ -1,5 +1,8 @@
 package project_z.demo.services.impl;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import project_z.demo.entity.UserEntity;
@@ -17,5 +20,10 @@ public class UserServiceImpl implements UserService {
 public UserEntity createUser(UserEntity userEntity){
     return userRepository.save(userEntity);
     
+}
+@Override 
+public Optional<UserEntity> findOne(UUID id){
+
+return  userRepository.findById(id);
 }
 }

@@ -5,11 +5,9 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,8 +30,8 @@ public class UserEntity {
     @ElementCollection
     private List<String> friendsList;
   
-    @OneToMany( mappedBy= "user", cascade=CascadeType.ALL, orphanRemoval=true) 
-    private List<TitleEntity> watchList;
+   
+   
 
 
 }

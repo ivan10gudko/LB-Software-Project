@@ -14,9 +14,7 @@ return UserEntity.builder()
 .name("Genadiy")
 .description("Natural")
 .img(52)
-.friendsList(new ArrayList<>())
-.watchList(
-    new ArrayList<>()
+.friendsList(new ArrayList<>()
 ).build();
 }
 
@@ -28,7 +26,7 @@ public static TitleEntity createTestTitleA(final UserEntity user){
     .titleName("AOT")
     .titleRating(9)
     .status(TitleEntity.titleStatus.WATCHED)
-    .user(user)
+    .userId(user.getId())
     .build();
 }
 }

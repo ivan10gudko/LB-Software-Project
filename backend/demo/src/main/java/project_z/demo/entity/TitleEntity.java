@@ -1,13 +1,14 @@
 package project_z.demo.entity;
 
+import java.util.UUID;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,8 +34,8 @@ public class TitleEntity { public enum titleStatus {
     private float titleRating;
     @Enumerated(EnumType.STRING)
     private titleStatus status;
-    @ManyToOne
-    @JoinColumn(name = "user_id" )
-    private UserEntity user;
+    
+    @Column(name = "user_id" )
+    private UUID userId;
 }
 

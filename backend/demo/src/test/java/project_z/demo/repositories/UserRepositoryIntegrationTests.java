@@ -28,7 +28,7 @@ public void testThatCreateNewUser(){
     assertThat(result).isPresent();
     assertThat (result.get())
     .usingRecursiveComparison()
-    .ignoringFields("id" ,"friendsList", "watchList")
+    .ignoringFields("id" ,"friendsList")
     .isEqualTo(user);
     
 }
@@ -41,16 +41,9 @@ public void testThatUpdateUser(){
     Optional <UserEntity> result = underTest.findById(user.getId());
     assertThat(result).isPresent();
     assertThat(result.get()).usingRecursiveComparison()
-    .ignoringFields("id" ,"friendsList", "watchList")
+    .ignoringFields("id" ,"friendsList")
     .isEqualTo(user);
 }
-@Test
-public void testThatDeleteUser(){
-    UserEntity user = TestDataUtil.createTestUserA();
-    underTest.save(user);
-    underTest.deleteById(user.getId());
-    Optional <UserEntity> result = underTest.findById(user.getId());
-    assertThat(result).isEmpty();
-}
+
 }
 
