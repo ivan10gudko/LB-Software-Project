@@ -29,7 +29,8 @@ public class TitleEntity { public enum titleStatus {
     PLANNED
 }
     @Id
-    private int titleId;
+    private Integer titleId;
+    private int apiTitleId;
     private String titleName;
     private float titleRating;
     @Enumerated(EnumType.STRING)

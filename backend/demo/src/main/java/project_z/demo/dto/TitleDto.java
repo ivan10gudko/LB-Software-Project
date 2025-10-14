@@ -15,7 +15,8 @@ import project_z.demo.entity.TitleEntity.titleStatus;
 @Builder
 public class TitleDto {
  @Id
-    private int titleId;
+    private Integer titleId;
+    private int apiTitleId;
     private String titleName;
     private float titleRating;
     

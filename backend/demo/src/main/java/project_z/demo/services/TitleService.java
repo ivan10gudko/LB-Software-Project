@@ -8,7 +8,8 @@ import project_z.demo.entity.TitleEntity;
 public interface  TitleService {
     TitleEntity createTitle(TitleEntity title );
     List<TitleEntity> findAll();
-    Optional<TitleEntity> findOne(int titleId);
-        
-    
+    Optional<TitleEntity> findOne(Integer titleId);
+    boolean isExists (Integer titleId);
+    TitleEntity partialUpdate(Integer titleId, TitleEntity titleEntity);
+    void deleteById(Integer id);
 }

@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class UserEntity {
     @Id
-    
     private UUID id;
     private String name;
     private String description;

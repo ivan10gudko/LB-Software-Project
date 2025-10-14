@@ -5,7 +5,9 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -57,6 +59,29 @@ public class UserController {
         userDto.setId(id);
         UserEntity userEntity = userMapper.mapFrom(userDto);
     UserEntity savedUserEntity =  userService.save(userEntity);
-      return new ResponseEntity<> (userMapper.mapTo(userEntity), HttpStatus.OK);
+      return new ResponseEntity<> (userMapper.mapTo(savedUserEntity), HttpStatus.OK);
+    }
+
+
+    @PatchMapping(path = "/Users/{Id}")
+    public ResponseEntity<UserDto> partialUpdate (
+        @PathVariable("Id") UUID id,@RequestBody UserDto userDto
+        ){
+             if(!userService.isExists(id)){
+            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+       UserEntity userEntity = userMapper.mapFrom(userDto);
+        UserEntity updatedUserEntity  = userService.partialUpdate(id, userEntity);
+        return new ResponseEntity<>(userMapper.mapTo(updatedUserEntity), HttpStatus.OK);
+    }
+    @DeleteMapping(path = "/Users/{Id}")
+    public ResponseEntity<Void> deleteUserById(
+        @PathVariable("Id") UUID Id
+    ){
+         if(!userService.isExists(Id)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+         }
+          userService.deleteById(Id);
+          return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

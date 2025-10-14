@@ -2,12 +2,15 @@ package project_z.demo.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +24,8 @@ import project_z.demo.services.TitleService;
 
 
 
+
+
 @RestController
 public class TitleController {
 @Autowired
@@ -28,12 +33,12 @@ private Mapper<TitleEntity, TitleDto> titleMapper;
 @Autowired
 private TitleService titleService;
 @PostMapping("/Titles")
-public ResponseEntity <TitleDto> createTitle (
+public ResponseEntity <TitleDto> CreateTitle (
     @RequestBody TitleDto titleDto) {
-   TitleEntity titleEntity = titleMapper.mapFrom(titleDto);
-    TitleEntity savedTitle = titleService.createTitle(titleEntity);
-    TitleDto savedTitleDto = titleMapper.mapTo(savedTitle);
-   return new ResponseEntity<>(savedTitleDto, HttpStatus.CREATED);
+        TitleEntity titleEntity = titleMapper.mapFrom(titleDto);
+        TitleEntity savedTitle = titleService.createTitle(titleEntity);
+        TitleDto savedTitleDto = titleMapper.mapTo(savedTitle);
+    return new ResponseEntity<>(savedTitleDto, HttpStatus.CREATED);
 }
 
 
@@ -56,10 +61,41 @@ public ResponseEntity<TitleDto> getTitle(@PathVariable("titleId") int titleId) {
     }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
 }
-@PutMapping(path = "/Titles")
-public String putMethodName(@PathVariable String id, @RequestBody String entity) {
-    //TODO: process PUT request
-    
-    return null;
+@PutMapping(path = "/Titles/{titleId}")
+public ResponseEntity<TitleDto> fullUpdateTitle (
+    @PathVariable("titleId") int titleId,
+    @RequestBody TitleDto titleDto
+    ) {
+    boolean bookExists = titleService.isExists(titleDto.getTitleId());
+     TitleEntity titleEntity = titleMapper.mapFrom(titleDto);
+        TitleEntity savedTitle = titleService.createTitle(titleEntity);
+        TitleDto savedTitleDto = titleMapper.mapTo(savedTitle);
+        if(bookExists){
+            return new ResponseEntity<>(titleDto, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 }
+@PatchMapping(path = "/Titles/{titleId}")
+    public ResponseEntity<TitleDto> partialUpdate (
+        @PathVariable("titleId") int titleId,@RequestBody TitleDto titleDto
+        ){
+             if(!titleService.isExists(titleId)){
+            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+       TitleEntity titleEntity = titleMapper.mapFrom(titleDto);
+        TitleEntity updatedTitleEntity  = titleService.partialUpdate(titleId, titleEntity);
+        return new ResponseEntity<>(titleMapper.mapTo(updatedTitleEntity), HttpStatus.OK);
+    }
+    @DeleteMapping(path = "/Titles/{titleId}")
+    public ResponseEntity<Void> deleteUserById(
+        @PathVariable("titleId") Integer titleId
+    ){
+         if(!titleService.isExists(titleId)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+         }
+          titleService.deleteById(titleId);
+          return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

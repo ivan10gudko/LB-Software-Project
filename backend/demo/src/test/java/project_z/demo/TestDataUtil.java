@@ -23,6 +23,7 @@ public static TitleEntity createTestTitleA(final UserEntity user){
      
     return TitleEntity.builder()
     .titleId(1)
+    .apiTitleId(1)
     .titleName("AOT")
     .titleRating(9)
     .status(TitleEntity.titleStatus.WATCHED)
