@@ -1,20 +1,29 @@
 import axios from 'axios';
 import type { Anime } from './MyAnimeList.types';
+import type { AnimeCardType } from '~/components/Home/AnimeCard';
 
-export async function getTopAnimeList(){
-
-    const options = {
-        method: 'GET',
-        url: 'https://api.jikan.moe/v4/top/anime'
-    };
-
+export async function getTopAnimeList(): Promise<AnimeCardType[]> {
     try {
-	    const response = await axios.request(options);
-	    return response.data.data;
+        const response = await axios.get("https://api.jikan.moe/v4/top/anime");
+        const data = response.data.data;
+
+        const animeList: AnimeCardType[] = data.map((item: any) => ({
+            id: item.mal_id,
+            title: item.title,
+            score: item.score,
+            img: item.images?.jpg?.image_url || "",
+            year: item.year,
+            episodes: item.episodes,
+            genres: item.genres,
+            airing: item.airing,
+        }));
+
+        return animeList;
     } catch (error) {
-	    console.error(error);
+        console.error("Error fetching top anime:", error);
+        return [];
     }
-};
+}
 
 export async function getTopAnime(){
 
@@ -76,6 +85,7 @@ try {
 
 
 export async function getAnimeSearch(q:string){
+    
 const options = {
     method: 'GET',
     url: `https://api.jikan.moe/v4/anime?q=${q}`,

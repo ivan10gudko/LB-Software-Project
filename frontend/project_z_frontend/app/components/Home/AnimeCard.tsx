@@ -1,0 +1,55 @@
+import Badge from "../Badge";
+import CardDate from "../CardDate";
+import Date from "../Date";
+import Rating from "../Rating";
+
+interface Props{
+    data:AnimeCardType;
+}
+
+export interface AnimeCardType{
+    id: number;
+    title: string;
+    score:number;
+    img: string;
+    year: number;
+    episodes:number;
+    genres: Array<Genre>,
+    airing:boolean,
+}
+
+interface Genre{
+    mal_id: number;
+    type: string;
+    name: string;
+    url: string;
+}
+
+
+
+const AnimeCard : React.FC<Props> = ({data})=>{
+
+    const genres = data.genres.length<=3 ? data.genres : [...data.genres.slice(0,3) , {mal_id:0,type:"",name:`+${data.genres.length-3}`,url:""}]
+
+    return (<div className="rounded-lg shadow hover:shadow-md pb-2 flex flex-col">
+        <div className="w-full relative aspect-[3/4] overflow-hidden rounded-lg">
+            <img className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" src={data.img}/>
+        </div>
+        <div className="px-3 pb-6 pt-6 flex flex-col grow">
+            <div>
+                <span className="font-light grow">{data.title}</span>
+                    {data.year ? <CardDate >{data.year}</CardDate> : null}
+                <div className="flex flex-wrap gap-2 my-4">
+                    {genres.map(genre=><Badge key={genre.mal_id} textColor="black" size="sm">{genre.name}</Badge>)}
+                </div>
+            </div>
+
+            <div className="flex justify-between mt-auto">
+                <Rating className="gap-1 text-sm ">{data?.score}</Rating>
+                {data.airing ? <Badge textColor="black" size="sm">Ongoing</Badge>:<Badge color="black" textColor="white" size="sm">Completed</Badge>}    
+            </div>
+        </div>
+    </div>)
+};
+
+export default AnimeCard;

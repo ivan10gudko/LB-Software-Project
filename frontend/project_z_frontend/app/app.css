@@ -40,3 +40,13 @@ body{
 
     
 }
+
+.dropdown{
+    transition-duration: 200ms;
+    transition-delay: 75ms;
+}
+
+.dropdown.open{
+
+    transform: rotate(0.5turn);
+}
