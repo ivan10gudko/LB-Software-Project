@@ -1,3 +1,4 @@
+import { useNavigate, useNavigation } from "react-router";
 import Badge from "../Badge";
 import CardDate from "../CardDate";
 import Date from "../Date";
@@ -28,10 +29,11 @@ interface Genre{
 
 
 const AnimeCard : React.FC<Props> = ({data})=>{
+    const navigate = useNavigate();
 
     const genres = data.genres.length<=3 ? data.genres : [...data.genres.slice(0,3) , {mal_id:0,type:"",name:`+${data.genres.length-3}`,url:""}]
 
-    return (<div className="rounded-lg shadow hover:shadow-md pb-2 flex flex-col">
+    return (<div className="rounded-lg shadow hover:shadow-md pb-2 flex flex-col cursor-pointer" onClick={()=>navigate(`/anime/${data.id}`)}>
         <div className="w-full relative aspect-[3/4] overflow-hidden rounded-lg">
             <img className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" src={data.img}/>
         </div>
@@ -44,7 +46,7 @@ const AnimeCard : React.FC<Props> = ({data})=>{
                 </div>
             </div>
 
-            <div className="flex justify-between mt-auto">
+            <div className="flex flex-col gap-3 sm:flex-row justify-between mt-auto">
                 <Rating className="gap-1 text-sm ">{data?.score}</Rating>
                 {data.airing ? <Badge textColor="black" size="sm">Ongoing</Badge>:<Badge color="black" textColor="white" size="sm">Completed</Badge>}    
             </div>
