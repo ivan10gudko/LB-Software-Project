@@ -3,10 +3,11 @@ interface Props{
     color?:string,
     textColor?:string,
     size?: "lg" | "md" | "sm",
+    border?: boolean
 
 }
 
-const Badge: React.FC<Props> = ({children, color,textColor,size="md"})=>{
+const Badge: React.FC<Props> = ({children, color,textColor,size="md",border=true})=>{
     let styles:string;
     if(size=="lg"){
         styles = color||textColor ?"py-2 px-5 flex w-fit rounded-xl text-md hover:opacity-80 border items-center ":"py-1 px-3 text-white flex w-fit rounded-lg text-xs border border-white hover:opacity-80  items-center ";
@@ -17,7 +18,7 @@ const Badge: React.FC<Props> = ({children, color,textColor,size="md"})=>{
     }
 
     return(
-            <div className={styles} style={{ backgroundColor:color , color:textColor,borderColor:textColor }}>{children}</div>
+            <div className={styles} style={{ backgroundColor:color , color:textColor,borderColor:border ? textColor : color }}>{children}</div>
         );
 }
 export default Badge;

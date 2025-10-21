@@ -29,7 +29,7 @@ return (
         <div className="bg-black w-full"></div>
         <div className="absolute w-full h-full bg-linear-95 from-black/100 via-black/90 to-black/40 text-white py-8 lg:py-24 px-2 md:px-8 lg:px-20">
             <div className="w-full md:w-2/3 xl:w-1/2 max-md:bg-linear-180 from-black/0 via-black/85 to-black/100 md:bg-transparent max-md:py-4 max-md:px-4">
-                <Badge size="sm" color="blue">
+                <Badge size="sm" color="blue" border={false}>
                     Featured anime
                 </Badge>
                 <h2 className="my-3 text-2xl sm:text-3xl md:text-4xl">
