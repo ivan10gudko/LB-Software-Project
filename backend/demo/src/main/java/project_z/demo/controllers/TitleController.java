@@ -2,7 +2,6 @@ package project_z.demo.controllers;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,7 @@ import project_z.demo.Mappers.Mapper;
 import project_z.demo.dto.TitleDto;
 import project_z.demo.entity.TitleEntity;
 import project_z.demo.services.TitleService;
+
 
 
 
@@ -88,7 +88,7 @@ public ResponseEntity<TitleDto> fullUpdateTitle (
         TitleEntity updatedTitleEntity  = titleService.partialUpdate(titleId, titleEntity);
         return new ResponseEntity<>(titleMapper.mapTo(updatedTitleEntity), HttpStatus.OK);
     }
-    @DeleteMapping(path = "/Titles/{titleId}")
+@DeleteMapping(path = "/Titles/{titleId}")
     public ResponseEntity<Void> deleteUserById(
         @PathVariable("titleId") Integer titleId
     ){
@@ -98,4 +98,6 @@ public ResponseEntity<TitleDto> fullUpdateTitle (
           titleService.deleteById(titleId);
           return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+  
+    
 }
