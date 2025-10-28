@@ -25,6 +25,30 @@ export async function getTopAnimeList(): Promise<AnimeCardType[]> {
     }
 }
 
+export async function getSeasonalAnimeList(): Promise<AnimeCardType[]> {
+    try {
+        const response = await axios.get("https://api.jikan.moe/v4/seasons/now");
+        const data = response.data.data;
+
+        const animeList: AnimeCardType[] = data.map((item: any) => ({
+            id: item.mal_id,
+            title: item.title,
+            score: item.score,
+            img: item.images?.jpg?.image_url || "",
+            year: item.year,
+            episodes: item.episodes,
+            genres: item.genres,
+            airing: item.airing,
+        }));
+
+        return animeList;
+    } catch (error) {
+        console.error("Error fetching seasonal anime:", error);
+        return [];
+    }
+}
+
+
 export async function getTopAnime(){
 
     const options = {

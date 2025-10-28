@@ -33,7 +33,7 @@ const AnimeCard : React.FC<Props> = ({data})=>{
 
     const genres = data.genres.length<=3 ? data.genres : [...data.genres.slice(0,3) , {mal_id:0,type:"",name:`+${data.genres.length-3}`,url:""}]
 
-    return (<div className="rounded-lg shadow hover:shadow-md pb-2 flex flex-col cursor-pointer" onClick={()=>navigate(`/anime/${data.id}`)}>
+    return (<div className="rounded-lg shadow hover:shadow-md pb-2 flex flex-col cursor-pointer h-full" onClick={()=>navigate(`/anime/${data.id}`)}>
         <div className="w-full relative aspect-[3/4] overflow-hidden rounded-lg">
             <img className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" src={data.img}/>
         </div>

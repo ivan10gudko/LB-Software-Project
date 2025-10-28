@@ -2,6 +2,7 @@ import { Suspense, useEffect } from "react";
 import HeroSection from "~/components/Home/HeroSection";
 import HeroSkeleton from "~/components/Home/HeroSkeleton";
 import Loader from "~/components/Home/Loader";
+import SeasonAnimeList from "~/components/Home/SeasonAnimeList";
 import TopAnimeList from "~/components/Home/TopAnimeList";
 
 
@@ -12,6 +13,7 @@ const Home : React.FC = ()=> {
         <Suspense fallback={<HeroSkeleton />}>
             <HeroSection />
         </Suspense>
+        <SeasonAnimeList />
         <TopAnimeList />
     </>
     );
