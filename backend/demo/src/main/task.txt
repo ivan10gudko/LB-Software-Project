@@ -1,5 +1,26 @@
+room(many to many)
+UserSeach
+roomEntity{
+room id 
+owner id
+room name 
+}
+RoomsMebmers(table){
+user id
+room id
+role
+}
 
-translate me to front
-translate find me to api or google translate
+UserSeach by Name 
 
-request front to back
+
+user {
+    nameTag(unique)
+
+}
+register check unique nameTag
+
+
+Rooms Crud
+Relations beetween classes
+!!! times temp !!! 

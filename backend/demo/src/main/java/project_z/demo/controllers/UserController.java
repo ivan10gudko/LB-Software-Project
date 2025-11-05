@@ -49,9 +49,9 @@ public class UserController {
             return new ResponseEntity<>(userDto, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @PutMapping(path  = "/Users/{Id}")
+    @PutMapping(path  = "/Users/{id}")
     public ResponseEntity<UserDto> fullUpdateUser(
-        @PathVariable("Id") UUID id,
+        @PathVariable("id") UUID id,
         @RequestBody UserDto userDto) {
         if(!userService.isExists(id)){
             return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -63,9 +63,9 @@ public class UserController {
     }
 
 
-    @PatchMapping(path = "/Users/{Id}")
+    @PatchMapping(path = "/Users/{id}")
     public ResponseEntity<UserDto> partialUpdate (
-        @PathVariable("Id") UUID id,@RequestBody UserDto userDto
+        @PathVariable("id") UUID id,@RequestBody UserDto userDto
         ){
              if(!userService.isExists(id)){
             return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -74,14 +74,14 @@ public class UserController {
         UserEntity updatedUserEntity  = userService.partialUpdate(id, userEntity);
         return new ResponseEntity<>(userMapper.mapTo(updatedUserEntity), HttpStatus.OK);
     }
-    @DeleteMapping(path = "/Users/{Id}")
+    @DeleteMapping(path = "/Users/{id}")
     public ResponseEntity<Void> deleteUserById(
-        @PathVariable("Id") UUID Id
+        @PathVariable("id") UUID id
     ){
-         if(!userService.isExists(Id)){
+         if(!userService.isExists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
          }
-          userService.deleteById(Id);
+          userService.deleteById(id);
           return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

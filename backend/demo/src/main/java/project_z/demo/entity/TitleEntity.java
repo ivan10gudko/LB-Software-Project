@@ -1,5 +1,6 @@
 package project_z.demo.entity;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -23,7 +24,8 @@ import lombok.NoArgsConstructor;
 
 @Table(name="titles")
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class TitleEntity { public enum titleStatus {
+public class TitleEntity { 
+    public enum titleStatus {
     WATCHED,
     FAVOURITE,
     PLANNED
@@ -33,10 +35,13 @@ public class TitleEntity { public enum titleStatus {
     private int apiTitleId;
     private String titleName;
     private float titleRating;
+    @Column(name = "img")
+    private String img;
     @Enumerated(EnumType.STRING)
     private titleStatus status;
     
     @Column(name = "user_id" )
     private UUID userId;
+    private LocalDateTime createdAt;
 }
 
