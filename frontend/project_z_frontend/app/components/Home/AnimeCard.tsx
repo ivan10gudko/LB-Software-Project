@@ -1,8 +1,19 @@
 import { useNavigate, useNavigation } from "react-router";
+import { useEffect, useRef, useState } from "react";
+
 import Badge from "../Badge";
 import CardDate from "../CardDate";
 import Date from "../Date";
 import Rating from "../Rating";
+
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import CloseIcon from '@mui/icons-material/Close';
+import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
+import StarOutlineOutlinedIcon from '@mui/icons-material/StarOutlineOutlined';
+import LibraryAddCheckOutlinedIcon from '@mui/icons-material/LibraryAddCheckOutlined';
+import useWatchlist, { type Title } from "~/store/Watchlist";
+import WatchLaterIcon from '@mui/icons-material/WatchLater';
+import AnimeCardMenu from "./AnimeCardMenu";
 
 interface Props{
     data:AnimeCardType;
@@ -30,12 +41,19 @@ interface Genre{
 
 const AnimeCard : React.FC<Props> = ({data})=>{
     const navigate = useNavigate();
+    const ref = useRef<HTMLDivElement>(null);
 
-    const genres = data.genres.length<=3 ? data.genres : [...data.genres.slice(0,3) , {mal_id:0,type:"",name:`+${data.genres.length-3}`,url:""}]
+    const genres = data.genres.length <= 3 ? data.genres : [...data.genres.slice(0,3) , {mal_id:0,type:"",name:`+${data.genres.length-3}`,url:""}]
 
-    return (<div className="rounded-lg shadow hover:shadow-md pb-2 flex flex-col cursor-pointer h-full" onClick={()=>navigate(`/anime/${data.id}`)}>
+    return (
+    <div
+        ref={ref}
+        className="rounded-lg shadow hover:shadow-md pb-2 flex flex-col cursor-pointer h-full"
+        onClick={()=>navigate(`/anime/${data.id}`)}
+        >
         <div className="w-full relative aspect-[3/4] overflow-hidden rounded-lg">
             <img className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" src={data.img}/>
+            <AnimeCardMenu parentRef={ref as React.RefObject<HTMLDivElement>} item={{id:data.id,title:data.title,img:data.img}}/>
         </div>
         <div className="px-3 pb-6 pt-6 flex flex-col grow">
             <div>
