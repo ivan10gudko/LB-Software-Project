@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UserDto {
-    private UUID id;
+    private UUID userId;
     private String name;
     private String description;
     private int img;
