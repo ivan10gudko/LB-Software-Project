@@ -20,7 +20,6 @@ import project_z.demo.services.RoomService;
 @Service
 public class RoomServiceImpl implements RoomService {
 
-    private final RoomService roomService;
     @Autowired
     private RoomRepository roomRepository;
     @Autowired
@@ -28,9 +27,7 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     private UserRepository userRepository;
 
-    RoomServiceImpl(RoomService roomService) {
-        this.roomService = roomService;
-    }
+    
     @Override
     public RoomEntity save(RoomEntity roomEntity){
         return roomRepository.save(roomEntity);
@@ -84,11 +81,12 @@ public class RoomServiceImpl implements RoomService {
     }
    
     @Override
-    @Transactional
+    
     public void deleteMembers(Long roomId, List<UUID> userIds){
         RoomEntity roomEntity = roomRepository.findById(roomId).orElseThrow(
             ()-> new RuntimeException("Room not found")
         );
+        
         roomEntity.getMembers().removeIf(user -> userIds.contains(user.getUserId()));
         roomRepository.save(roomEntity);
     }

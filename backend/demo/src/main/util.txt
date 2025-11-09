@@ -1,7 +1,7 @@
 --------------------------------
 json to post
 {
-    "id": "c91438ea-8288-4584-898b-c8a6c33a8e07",
+    "userId": "c91438ea-8288-4584-898b-c8a6c33a8e07",
     "name": "Genadiy",
     "description": "Natural",
     "img": 52,

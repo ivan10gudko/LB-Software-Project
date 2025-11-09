@@ -95,8 +95,15 @@ public class RoomController {
         @RequestBody List<UUID> memberIds){
             RoomEntity updated = roomService.addMembersToRoom(id, memberIds);
             return new ResponseEntity<>(roomMapper.mapTo(updated), HttpStatus.OK);
+            
         }
-
+    @DeleteMapping(path = "/Rooms/members/{id}")
+    public ResponseEntity<Void> deleteMembers(
+    @PathVariable("id")long id,
+    @RequestBody List<UUID> userIds){
+        roomService.deleteMembers(id, userIds);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     @DeleteMapping(path = "/Rooms/{id}")
     public ResponseEntity<Void> deleteRoom(@PathVariable("id") long id){
         if(!roomService.isExists(id)){
