@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
-import SkeletonCard from './SceletonCard';
+import SkeletonCard from '../Card/SceletonCard';
 
 /**
  * Скелетон для всього компонента CollapsibleSection.

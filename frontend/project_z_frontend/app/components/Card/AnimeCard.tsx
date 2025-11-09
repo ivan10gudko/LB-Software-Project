@@ -2,7 +2,7 @@ import { useNavigate, useNavigation } from "react-router";
 import { useEffect, useRef, useState } from "react";
 
 import Badge from "../Badge";
-import CardDate from "../CardDate";
+import CardDate from "./CardDate";
 import Date from "../Date";
 import Rating from "../Rating";
 

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getSeasonalAnimeList, getSeasonNow, getTopAnimeList } from "~/services/MyAnimeList";
-import AnimeCard, { type AnimeCardType } from "./AnimeCard";
+import AnimeCard, { type AnimeCardType } from "../Card/AnimeCard";
 import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
 import { useState } from "react";
 import useWindowDimensions from "~/utils/useWindowDimensions";
