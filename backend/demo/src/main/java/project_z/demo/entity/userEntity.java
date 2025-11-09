@@ -5,11 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,4 +36,6 @@ public class UserEntity {
     @ManyToMany(mappedBy = "members")
     private List<RoomEntity> rooms = new ArrayList<>();
     private LocalDateTime createdAt;
+    @OneToMany(mappedBy= "user",cascade = CascadeType.ALL, orphanRemoval=true)
+    private List<TitleEntity> titleList;
 }

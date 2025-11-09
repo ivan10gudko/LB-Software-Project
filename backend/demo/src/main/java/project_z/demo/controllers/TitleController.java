@@ -1,7 +1,8 @@
 package project_z.demo.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import project_z.demo.Mappers.Mapper;
 import project_z.demo.dto.TitleDto;
 import project_z.demo.entity.TitleEntity;
+import project_z.demo.entity.UserEntity;
 import project_z.demo.services.TitleService;
+import project_z.demo.services.UserService;
+
 
 
 
@@ -32,13 +36,19 @@ public class TitleController {
 private Mapper<TitleEntity, TitleDto> titleMapper;
 @Autowired
 private TitleService titleService;
-@PostMapping("/Titles")
-public ResponseEntity <TitleDto> CreateTitle (
+@Autowired
+private UserService userService;
+@PostMapping("/Titles/{userId}")
+public ResponseEntity<List<TitleDto>> CreateTitle (
+    @PathVariable("userId") UUID userId,
     @RequestBody TitleDto titleDto) {
         TitleEntity titleEntity = titleMapper.mapFrom(titleDto);
-        TitleEntity savedTitle = titleService.createTitle(titleEntity);
-        TitleDto savedTitleDto = titleMapper.mapTo(savedTitle);
-    return new ResponseEntity<>(savedTitleDto, HttpStatus.CREATED);
+        List<TitleEntity> titleEntitys = titleService.addTitle(titleEntity, userId);
+        List<TitleDto> response = new ArrayList<>();
+        for(TitleEntity entity : titleEntitys){
+            response.add(titleMapper.mapTo(entity));
+        }
+    return new ResponseEntity<>(response, HttpStatus.CREATED);
 }
 
 
@@ -50,17 +60,20 @@ public List<TitleDto> ListTitles(){
     .collect(Collectors.toList());
     
 }
-@GetMapping(path = "/Titles/{titleId}")
-public ResponseEntity<TitleDto> getTitle(@PathVariable("titleId") int titleId) {
-    Optional<TitleEntity> foundTitle = titleService.findOne(titleId);
-    return foundTitle
-    .map(TitleEntity ->{
-        TitleDto titleDto = titleMapper.mapTo(TitleEntity);
-        return new ResponseEntity<>(titleDto , HttpStatus.OK);
-        
-    }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
+@GetMapping(path = "/Titles/{userId}")
+public ResponseEntity<List<TitleDto>> getTitleListByUserId(@PathVariable("userId") UUID userId){
+        UserEntity userEntity = userService.findOne(userId).orElseThrow(
+            ()-> new RuntimeException("user not found")
+        );
+        List<TitleEntity> titleEntitys = userEntity.getTitleList();
+        List<TitleDto> response = new ArrayList<>();
+        for(TitleEntity titleEntity : titleEntitys){
+            response.add(titleMapper.mapTo(titleEntity));
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
 }
+
 @PutMapping(path = "/Titles/{titleId}")
 public ResponseEntity<TitleDto> fullUpdateTitle (
     @PathVariable("titleId") int titleId,
@@ -89,7 +102,7 @@ public ResponseEntity<TitleDto> fullUpdateTitle (
         return new ResponseEntity<>(titleMapper.mapTo(updatedTitleEntity), HttpStatus.OK);
     }
 @DeleteMapping(path = "/Titles/{titleId}")
-    public ResponseEntity<Void> deleteUserById(
+    public ResponseEntity<Void> deleteTitleById(
         @PathVariable("titleId") Integer titleId
     ){
          if(!titleService.isExists(titleId)){

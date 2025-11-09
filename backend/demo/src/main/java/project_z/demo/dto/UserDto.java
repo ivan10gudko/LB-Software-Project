@@ -20,6 +20,5 @@ public class UserDto {
     private String name;
     private String description;
     private int img;
-    private List<UserDto> friendsList;
     private List<UserDto> watchList;
 }

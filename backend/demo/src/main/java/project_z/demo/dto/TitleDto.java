@@ -1,6 +1,6 @@
 package project_z.demo.dto;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -19,9 +19,6 @@ public class TitleDto {
     private int apiTitleId;
     private String titleName;
     private float titleRating;
-    
     private titleStatus status;
-    
-    
-    private UUID userId;
+    private LocalDateTime createdAt;
 }

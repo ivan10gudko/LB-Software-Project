@@ -36,8 +36,9 @@ public class RoomEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roomId;
     private String roomName;
-   @ManyToMany
-@JoinTable(
+    @Builder.Default
+    @ManyToMany
+    @JoinTable(
         name = "room_members",
         joinColumns = @JoinColumn(name = "room_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id")

@@ -51,7 +51,7 @@ public class RoomServiceImpl implements RoomService {
             return roomRepository.save(target);
         })
         .orElseThrow(() -> new RuntimeException("User not found"));
-}
+    }
     @Override
     public boolean isExists(Long id){
         return roomRepository.existsById(id);

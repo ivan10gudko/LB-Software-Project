@@ -22,7 +22,6 @@ import project_z.demo.dto.RoomDto;
 import project_z.demo.dto.UserDto;
 import project_z.demo.entity.RoomEntity;
 import project_z.demo.entity.UserEntity;
-import project_z.demo.repositories.RoomRepository;
 import project_z.demo.services.RoomService;
 import project_z.demo.services.UserService;
 
@@ -36,8 +35,6 @@ public class RoomController {
     private RoomService roomService;
     @Autowired
     private UserService userService;
-    @Autowired
-    private RoomRepository roomRepository;
     @Autowired
     private Mapper<RoomEntity,RoomDto> roomMapper;
     @Autowired

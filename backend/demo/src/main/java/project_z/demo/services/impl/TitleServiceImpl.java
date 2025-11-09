@@ -2,6 +2,7 @@ package project_z.demo.services.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import project_z.demo.JavaUtil.BeanUtilsHelper;
 import project_z.demo.entity.TitleEntity;
+import project_z.demo.entity.UserEntity;
 import project_z.demo.repositories.TitleRepository;
+import project_z.demo.repositories.UserRepository;
 import project_z.demo.services.TitleService;
 @Service
 public class TitleServiceImpl implements TitleService {
@@ -18,6 +21,8 @@ public class TitleServiceImpl implements TitleService {
     private BeanUtilsHelper beanUtilsHelper;
     @Autowired
     private TitleRepository titleRepository;
+    @Autowired
+    private UserRepository userRepository;
 @Override
 public TitleEntity createTitle(TitleEntity title){
     return titleRepository.save(title);
@@ -51,4 +56,14 @@ public TitleEntity partialUpdate(Integer titleId, TitleEntity source) {
 public void deleteById(Integer Id){
     titleRepository.deleteById(Id);
 }
+@Override
+public List<TitleEntity> addTitle(TitleEntity titleEntity, UUID userId){
+    UserEntity userEntity = userRepository.findById(userId).orElseThrow(
+        () -> new RuntimeException("user not found"));
+        titleEntity.setUser(userEntity);
+        userEntity.getTitleList().add(titleEntity);
+        userRepository.save(userEntity);
+        return userEntity.getTitleList();
+}
+
 }

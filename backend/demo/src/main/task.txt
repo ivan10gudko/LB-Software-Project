@@ -21,6 +21,5 @@ user {
 register check unique nameTag
 
 
-Rooms Crud
 Relations beetween classes
 !!! times temp !!! 
