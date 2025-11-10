@@ -21,5 +21,4 @@ user {
 register check unique nameTag
 
 
-Relations beetween classes
 !!! times temp !!! 

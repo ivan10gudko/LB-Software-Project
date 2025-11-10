@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import project_z.demo.Mappers.Mapper;
 import project_z.demo.dto.TitleDto;
 import project_z.demo.entity.TitleEntity;
-import project_z.demo.entity.UserEntity;
 import project_z.demo.services.TitleService;
 import project_z.demo.services.UserService;
 
@@ -61,19 +60,28 @@ public List<TitleDto> ListTitles(){
     
 }
 
-@GetMapping(path = "/Titles/{userId}")
-public ResponseEntity<List<TitleDto>> getTitleListByUserId(@PathVariable("userId") UUID userId){
-        UserEntity userEntity = userService.findOne(userId).orElseThrow(
-            ()-> new RuntimeException("user not found")
-        );
-        List<TitleEntity> titleEntitys = userEntity.getTitleList();
+@GetMapping(path = "/Titles/{userId}/WATCHED")
+public ResponseEntity<List<TitleDto>> getWatchedListByUserId(@PathVariable("userId") UUID userId){
+        
+        List<TitleEntity> titleEntitys = titleService.getWatchedList(userId);
         List<TitleDto> response = new ArrayList<>();
         for(TitleEntity titleEntity : titleEntitys){
             response.add(titleMapper.mapTo(titleEntity));
         }
+        
         return new ResponseEntity<>(response, HttpStatus.OK);
 }
-
+@GetMapping(path = "/Titles/{userId}/PLANNED")
+public ResponseEntity<List<TitleDto>> getWatchListByUserId(@PathVariable("userId") UUID userId){
+        
+        List<TitleEntity> titleEntitys = titleService.getWatchList(userId);
+        List<TitleDto> response = new ArrayList<>();
+        for(TitleEntity titleEntity : titleEntitys){
+            response.add(titleMapper.mapTo(titleEntity));
+        }
+        
+        return new ResponseEntity<>(response, HttpStatus.OK);
+}
 @PutMapping(path = "/Titles/{titleId}")
 public ResponseEntity<TitleDto> fullUpdateTitle (
     @PathVariable("titleId") int titleId,

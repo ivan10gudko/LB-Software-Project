@@ -32,7 +32,6 @@ import lombok.NoArgsConstructor;
 public class TitleEntity { 
     public enum titleStatus {
     WATCHED,
-    FAVOURITE,
     PLANNED
 }
     @Id

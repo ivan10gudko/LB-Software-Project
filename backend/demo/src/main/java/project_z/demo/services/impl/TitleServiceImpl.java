@@ -65,5 +65,20 @@ public List<TitleEntity> addTitle(TitleEntity titleEntity, UUID userId){
         userRepository.save(userEntity);
         return userEntity.getTitleList();
 }
-
+@Override
+public List<TitleEntity> getWatchedList(UUID userId){
+    UserEntity userEntity = userRepository.findById(userId).orElseThrow(
+    () -> new RuntimeException("user not found"));
+    List<TitleEntity> response = userEntity.getTitleList().stream().filter(title -> title.getStatus() == TitleEntity.titleStatus.WATCHED).toList();
+    return response;
+    
+}
+@Override
+public List<TitleEntity> getWatchList(UUID userId){
+    UserEntity userEntity = userRepository.findById(userId).orElseThrow(
+    () -> new RuntimeException("user not found"));
+    List<TitleEntity> response = userEntity.getTitleList().stream().filter(title -> title.getStatus() == TitleEntity.titleStatus.PLANNED).toList();
+    return response;
+    
+}
 }

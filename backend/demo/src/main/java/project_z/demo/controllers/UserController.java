@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project_z.demo.Mappers.Mapper;
 import project_z.demo.dto.UserDto;
 import project_z.demo.entity.UserEntity;
 import project_z.demo.services.UserService;
+
 
 
 
@@ -41,6 +43,10 @@ public class UserController {
         
       
     }
+    public String getMethodName(@RequestParam String param) {
+        return new String();
+    }
+    
     @GetMapping(path = "/Users/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable("id") UUID id){
         Optional<UserEntity> foundUser = userService.findOne(id);

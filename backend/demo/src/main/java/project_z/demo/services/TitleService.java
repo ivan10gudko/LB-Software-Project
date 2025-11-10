@@ -14,4 +14,6 @@ public interface  TitleService {
     TitleEntity partialUpdate(Integer titleId, TitleEntity titleEntity);
     void deleteById(Integer id);
     List<TitleEntity> addTitle(TitleEntity titleEntity,  UUID userId);
+    List<TitleEntity> getWatchedList(UUID userid);
+    List<TitleEntity> getWatchList(UUID userid);
 }
