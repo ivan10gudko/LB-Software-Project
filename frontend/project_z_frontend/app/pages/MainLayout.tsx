@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import Header from "../components/Header";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Footer from "~/components/Footer";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 function MainLayout() {
     const queryClient = new QueryClient();
@@ -14,6 +15,7 @@ function MainLayout() {
                 </main>
                 <Footer />
             </div>
+            <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     );
 }

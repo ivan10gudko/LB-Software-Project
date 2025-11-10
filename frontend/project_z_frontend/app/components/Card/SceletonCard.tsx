@@ -1,4 +1,4 @@
-// components/SkeletonCard.tsx
+
 import React from 'react';
 
 /**
