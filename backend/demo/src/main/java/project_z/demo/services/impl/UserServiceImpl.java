@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project_z.demo.JavaUtil.BeanUtilsHelper;
+import project_z.demo.entity.RoomEntity;
 import project_z.demo.entity.UserEntity;
+import project_z.demo.repositories.RoomRepository;
 import project_z.demo.repositories.TitleRepository;
 import project_z.demo.repositories.UserRepository;
 import project_z.demo.services.UserService;
@@ -19,6 +21,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BeanUtilsHelper beanUtilsHelper;
     private UserRepository userRepository;
+    @Autowired
+    private RoomRepository roomRepository;
     public UserServiceImpl(UserRepository userRepository, TitleRepository titleRepository){
         this.userRepository = userRepository;
         this.titleRepository = titleRepository;
@@ -47,8 +51,15 @@ public UserEntity partialUpdate(UUID id, UserEntity source) {
         .orElseThrow(() -> new RuntimeException("User not found"));
 }
 @Override
-public void deleteById(UUID Id){
-    userRepository.deleteById(Id);
+public void deleteById(UUID id){
+     UserEntity user = userRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("User not found"));
+    for (RoomEntity room : user.getRooms()) {
+        room.getMembers().remove(user);
+        roomRepository.save(room); 
+    }
+    user.getRooms().clear();
+    userRepository.deleteById(id);
 }
 
 

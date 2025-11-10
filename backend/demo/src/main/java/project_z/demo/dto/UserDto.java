@@ -1,6 +1,7 @@
 package project_z.demo.dto;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +19,9 @@ import lombok.NoArgsConstructor;
 public class UserDto {
     private UUID userId;
     private String name;
+    private String nameTag;
     private String description;
     private int img;
+    private LocalDateTime createdAt;
     private List<UserDto> watchList;
 }

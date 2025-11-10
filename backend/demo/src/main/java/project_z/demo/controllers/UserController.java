@@ -1,8 +1,10 @@
 package project_z.demo.controllers;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import project_z.demo.Mappers.Mapper;
 import project_z.demo.dto.UserDto;
 import project_z.demo.entity.UserEntity;
+import project_z.demo.repositories.UserRepository;
 import project_z.demo.services.UserService;
 
 
@@ -29,6 +32,8 @@ public class UserController {
 
     private UserService userService;
     private Mapper<UserEntity, UserDto> userMapper;
+    @Autowired 
+    private UserRepository userRepository;
 
     public UserController(UserService userService, Mapper<UserEntity, UserDto> userMapper){
         this.userService = userService;
@@ -36,15 +41,14 @@ public class UserController {
     }
 
     @PostMapping(path = "/Users")
-    public ResponseEntity <UserDto> createUser(@RequestBody UserDto user) {
+    public ResponseEntity <?> createUser(@RequestBody UserDto user) {
         UserEntity userEntity = userMapper.mapFrom(user);
+        if(userRepository.existsByNameTag(userEntity.getNameTag())){
+            return ResponseEntity.badRequest()
+            .body("NameTag '" + userEntity.getNameTag() + "' already exists");
+        }
         UserEntity savedUserEntity = userService.save(userEntity);
-       return new ResponseEntity<>( userMapper.mapTo(savedUserEntity), HttpStatus.CREATED);
-        
-      
-    }
-    public String getMethodName(@RequestParam String param) {
-        return new String();
+        return new ResponseEntity<>( userMapper.mapTo(savedUserEntity), HttpStatus.CREATED);
     }
     
     @GetMapping(path = "/Users/{id}")
@@ -55,6 +59,11 @@ public class UserController {
             return new ResponseEntity<>(userDto, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+    @GetMapping(path = "/Users")
+    public List<UserEntity> findUsersByNameTag(@RequestParam String param) {
+        return null;
+    }
+    
     @PutMapping(path  = "/Users/{id}")
     public ResponseEntity<UserDto> fullUpdateUser(
         @PathVariable("id") UUID id,
