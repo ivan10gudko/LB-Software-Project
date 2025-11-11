@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import project_z.demo.Mappers.Mapper;
 import project_z.demo.dto.TitleDto;
 import project_z.demo.entity.TitleEntity;
+import project_z.demo.entity.UserEntity;
 import project_z.demo.services.TitleService;
 import project_z.demo.services.UserService;
 
@@ -51,9 +52,11 @@ public ResponseEntity<List<TitleDto>> CreateTitle (
 }
 
 
-@GetMapping("/Titles")
-public List<TitleDto> ListTitles(){
-     List<TitleEntity> titles = titleService.findAll();
+@GetMapping("/Titles/{userId}")
+public List<TitleDto> getTitleListByUserId(@PathVariable("userId") UUID userId){
+    UserEntity userEntity = userService.findOne(userId).orElseThrow(
+    ()-> new RuntimeException("user not found"));
+    List<TitleEntity> titles = userEntity.getTitleList();
     return titles.stream()
     .map(titleMapper::mapTo)
     .collect(Collectors.toList());

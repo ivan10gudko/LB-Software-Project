@@ -61,6 +61,9 @@ public void deleteById(UUID id){
     user.getRooms().clear();
     userRepository.deleteById(id);
 }
-
+@Override
+public Optional<UserEntity> findByNameTag(String nameTag){
+    return userRepository.findByNameTag(nameTag);
+}
 
 }

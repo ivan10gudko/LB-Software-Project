@@ -1,24 +1,3 @@
-room(many to many)
-UserSeach
-roomEntity{
-room id 
-owner id
-room name 
+img{
+   postUser -> BLOB img -> Supabase save
 }
-RoomsMebmers(table){
-user id
-room id
-role
-}
-
-UserSeach by Name 
-
-
-user {
-    nameTag(unique)
-
-}
-register check unique nameTag
-
-
-!!! times temp !!! 

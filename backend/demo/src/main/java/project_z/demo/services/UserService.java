@@ -11,4 +11,5 @@ public interface UserService {
     boolean isExists(UUID id);
     UserEntity partialUpdate(UUID id, UserEntity userEntity);
     void deleteById(UUID id);
+    Optional<UserEntity> findByNameTag(String nameTag);
 }

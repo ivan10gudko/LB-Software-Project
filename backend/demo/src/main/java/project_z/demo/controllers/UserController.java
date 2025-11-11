@@ -1,6 +1,6 @@
 package project_z.demo.controllers;
 
-import java.util.List;
+
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project_z.demo.Mappers.Mapper;
@@ -59,9 +58,13 @@ public class UserController {
             return new ResponseEntity<>(userDto, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @GetMapping(path = "/Users")
-    public List<UserEntity> findUsersByNameTag(@RequestParam String param) {
-        return null;
+    @GetMapping(path = "/Users/{nameTag}/NameTag")
+    public UserDto findUsersByNameTag(@PathVariable("nameTag") String nameTag) {
+        UserEntity foundUser = userService.findByNameTag(nameTag).orElseThrow(
+            () -> new RuntimeException("user not found")
+        );
+        UserDto response = userMapper.mapTo(foundUser);
+        return response;
     }
     
     @PutMapping(path  = "/Users/{id}")
