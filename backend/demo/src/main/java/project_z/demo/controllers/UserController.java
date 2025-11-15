@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import project_z.demo.Mappers.Mapper;
 import project_z.demo.dto.UserDto;
@@ -91,6 +93,19 @@ public class UserController {
        UserEntity userEntity = userMapper.mapFrom(userDto);
         UserEntity updatedUserEntity  = userService.partialUpdate(id, userEntity);
         return new ResponseEntity<>(userMapper.mapTo(updatedUserEntity), HttpStatus.OK);
+    }
+    @PutMapping(path = "/users/avatar/{id}")
+    public ResponseEntity<String> changeUserImg(
+        @PathVariable("id") UUID id,
+        @RequestParam("file") MultipartFile file){
+        UserEntity userEntity = userService.findOne(id).orElseThrow(
+            () -> new RuntimeException("user not found"));
+        
+        String response =  userService.uploadAvatar(userEntity,file);
+        userEntity.setImg(response);
+        userRepository.save(userEntity);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+        
     }
     @DeleteMapping(path = "/Users/{id}")
     public ResponseEntity<Void> deleteUserById(

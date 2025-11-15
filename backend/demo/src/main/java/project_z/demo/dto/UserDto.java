@@ -21,7 +21,7 @@ public class UserDto {
     private String name;
     private String nameTag;
     private String description;
-    private int img;
+    private String img;
     private LocalDateTime createdAt;
     private List<UserDto> watchList;
 }
