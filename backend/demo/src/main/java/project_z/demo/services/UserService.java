@@ -1,5 +1,6 @@
 package project_z.demo.services;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,4 +16,5 @@ public interface UserService {
     void deleteById(UUID id);
     Optional<UserEntity> findByNameTag(String nameTag);
     String uploadAvatar(UserEntity userEntity, MultipartFile file);
+    List<UserEntity> findByName(String name);
 }
