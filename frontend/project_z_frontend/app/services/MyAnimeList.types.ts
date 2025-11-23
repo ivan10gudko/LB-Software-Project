@@ -37,6 +37,7 @@ export interface Anime {
         synopsis?: string | null;
         year?: number | null;
         genres: Genre[];
+        themes:Genre[];
         [index:string]:any;
 }
 
