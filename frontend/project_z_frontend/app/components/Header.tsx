@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import SearchBar from "./SearchBar";
 import Logo from "./Logo";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -10,6 +10,12 @@ function Header() {
     const [isLogged, setIsLogged] = useState<boolean>(false);
     const [burgerMenuOpen,setBurgerMenuOpen] = useState<boolean>(false);
 
+    const navigate = useNavigate();
+
+    const handleMainSearch = (query: string) => {
+        navigate(`/search?query=${encodeURIComponent(query)}`);
+    };
+
     const burgerMenuStyles = useMemo(()=> burgerMenuOpen ? "border-t-1 bg-black/60  backdrop-blur-sm absolute top-17 w-full left-0 h-full clip flex justify-center pt-4 text-white z-1000" : "hidden",[burgerMenuOpen]);
 
     return (
@@ -19,7 +25,7 @@ function Header() {
             </NavLink>
             
             <div className="hidden sm:flex gap-4 items-center">
-                <SearchBar />
+                <SearchBar onSearch={handleMainSearch} className="w-56"/>
                 <NavLink to={"/rooms"} className= {({ isActive, isPending }) => (
             isActive ? "text-amber-400 border-b font-bold " :
             isPending ? "text-amber-200 font-bold " :
@@ -36,7 +42,7 @@ function Header() {
             </div>
             
             <div className="flex sm:hidden gap-1 items-center">
-                <SearchBar />
+                <SearchBar onSearch={handleMainSearch} className="w-64"/>
                 
                 {isLogged ? (
                     <NavLink to="profile/123">

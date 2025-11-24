@@ -5,8 +5,6 @@ import { type ReactNode } from "react";
 import { useCollapsibleList } from "~/hooks/useCallableList";
 import CollapsibleSectionSkeleton from "./ColapsableSectionSceleton";
 
-
-// Props схожі на Варіант 1
 type CollapsibleSectionProps<T, K extends string | number> = {
     title: string|React.ReactNode;
     queryKey: QueryKey;
@@ -53,7 +51,7 @@ function CollapsibleSection<T, K extends string | number>({
                     <ArrowDropDownRoundedIcon sx={{ fontSize: 40 }} className={`dropdown ${isOpen ? "open" : ""}`} />
                 </button>
             </div>
-            <div className="w-full grid gap-y-6 xl:gap-y-10 grid-cols-2 md:grid-cols-4 xl:grid-cols-5 grid-rows-1 overflow-hidden 2xl:grid-cols-6 flex-wrap gap-6 py-10 justify-between">
+            <div className="card-container">
                 {alwaysVisibleItems.map((item) => (
                     <div key={getItemKey(item)}>
                         {renderItem(item)}

@@ -6,6 +6,12 @@
     --font-industrial: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
 }
 
+@layer components {
+  .card-container {
+    @apply w-full grid gap-y-6 xl:gap-y-10 grid-cols-2 md:grid-cols-4 xl:grid-cols-5 grid-rows-1 overflow-hidden 2xl:grid-cols-6 flex-wrap gap-6 py-10 justify-between;
+  }
+}
+
 body{
     font-style: var(--font-inter);
     font-weight: var(--font-weight-medium);

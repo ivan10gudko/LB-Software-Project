@@ -3,9 +3,10 @@ import Header from "../components/Header";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Footer from "~/components/Footer";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { queryClient } from "~/lib/queryClient";
 
 function MainLayout() {
-    const queryClient = new QueryClient();
+
     return (
         <QueryClientProvider client={queryClient}>
             <div className="app font-industrial min-h-screen flex flex-col">
