@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +32,7 @@ import project_z.demo.services.UserService;
 
     
 @RestController
+@RequestMapping("/api/v1/users")
 public class UserController {  
 
     private UserService userService;
@@ -43,7 +45,7 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @PostMapping(path = "/Users")
+    @PostMapping
     public ResponseEntity <?> createUser(@RequestBody UserDto user) {
         UserEntity userEntity = userMapper.mapFrom(user);
         if(userRepository.existsByNameTag(userEntity.getNameTag())){
@@ -54,7 +56,7 @@ public class UserController {
         return new ResponseEntity<>( userMapper.mapTo(savedUserEntity), HttpStatus.CREATED);
     }
     
-    @GetMapping(path = "/Users/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") UUID id){
         Optional<UserEntity> foundUser = userService.findOne(id);
        return foundUser.map(UserEntity -> {
@@ -62,7 +64,7 @@ public class UserController {
             return new ResponseEntity<>(userDto, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @GetMapping(path = "/Users/{nameTag}/nameTag")
+    @GetMapping(path = "/{nameTag}/nameTag")
     public UserDto findUsersByNameTag(@PathVariable("nameTag") String nameTag) {
         UserEntity foundUser = userService.findByNameTag(nameTag).orElseThrow(
             () -> new RuntimeException("user not found")
@@ -70,7 +72,7 @@ public class UserController {
         UserDto response = userMapper.mapTo(foundUser);
         return response;
     }
-    @GetMapping(path = "/users/name/{name}")
+    @GetMapping(path = "/name/{name}")
     public List<UserDto> findUsersByName(@PathVariable("name")String name) {
         List<UserEntity> userEntitys = userService.findByName(name);
         List<UserDto> response = new ArrayList<>();
@@ -82,7 +84,7 @@ public class UserController {
     }
     
     
-    @PutMapping(path  = "/Users/{id}")
+    @PutMapping(path  = "/{id}")
     public ResponseEntity<UserDto> fullUpdateUser(
         @PathVariable("id") UUID id,
         @RequestBody UserDto userDto) {
@@ -96,7 +98,7 @@ public class UserController {
     }
 
 
-    @PatchMapping(path = "/Users/{id}")
+    @PatchMapping(path = "/{id}")
     public ResponseEntity<UserDto> partialUpdate (
         @PathVariable("id") UUID id,@RequestBody UserDto userDto
         ){
@@ -107,7 +109,7 @@ public class UserController {
         UserEntity updatedUserEntity  = userService.partialUpdate(id, userEntity);
         return new ResponseEntity<>(userMapper.mapTo(updatedUserEntity), HttpStatus.OK);
     }
-    @PutMapping(path = "/users/avatar/{id}")
+    @PutMapping(path = "/avatar/{id}")
     public ResponseEntity<String> changeUserImg(
         @PathVariable("id") UUID id,
         @RequestParam("file") MultipartFile file){
@@ -120,7 +122,7 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
         
     }
-    @DeleteMapping(path = "/Users/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> deleteUserById(
         @PathVariable("id") UUID id
     ){

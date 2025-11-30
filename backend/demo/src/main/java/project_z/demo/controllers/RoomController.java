@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project_z.demo.Mappers.Mapper;
@@ -29,7 +30,9 @@ import project_z.demo.services.UserService;
 
 
 
+
 @RestController
+@RequestMapping("/api/v1/rooms")
 public class RoomController {
     @Autowired
     private RoomService roomService;
@@ -39,18 +42,28 @@ public class RoomController {
     private Mapper<RoomEntity,RoomDto> roomMapper;
     @Autowired
     private ModelMapper modelMapper;
-    @GetMapping("/Rooms/{id}")
-    public List<RoomEntity> getRoomsByUser(@PathVariable("id") UUID id) {
+    @GetMapping("/{roomId}")
+    public ResponseEntity<RoomDto> getRoomById(@PathVariable("roomId")Long roomId  ) {
+        RoomEntity roomEntity = roomService.findOne(roomId).orElseThrow(
+            () -> new RuntimeException("there is no room with that id")
+        );
+        RoomDto response = roomMapper.mapTo(roomEntity);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
+    
+    @GetMapping("/user/{id}")
+    public List<RoomEntity> getRoomsByUserId(@PathVariable("id") UUID id) {
         List<RoomEntity> response = roomService.getRoomsByUserId(id);
         return response;
     }
-    @GetMapping(path = "/Rooms")
+    @GetMapping
     public List<RoomEntity> getAllRooms() {
        List<RoomEntity> response = roomService.findAll();
        return response;
     }
 
-    @PostMapping(path = "/Rooms")
+    @PostMapping
     public ResponseEntity<RoomDto> createRoom(@RequestBody RoomDto roomDto) {
 
         RoomEntity roomEntity = roomMapper.mapFrom(roomDto);
@@ -59,14 +72,14 @@ public class RoomController {
         return new ResponseEntity<>(savedRoomDto, HttpStatus.CREATED);
         
     }
-    @PutMapping(path = "/Rooms/{id}")
+    @PutMapping(path = "/{id}")
     public ResponseEntity<RoomDto> roomFullUpdate(@PathVariable("id") Long id, @RequestBody RoomDto roomDto) {
         RoomEntity roomEntity = roomMapper.mapFrom(roomDto);
         RoomEntity updatedRoomEntity = roomService.save(roomEntity);
         RoomDto updatedRoomDto = roomMapper.mapTo(updatedRoomEntity);
         return new ResponseEntity<>(updatedRoomDto, HttpStatus.OK);
     }
-    @PatchMapping(path = "/Rooms/{id}")
+    @PatchMapping(path = "/{id}")
     public ResponseEntity<RoomDto> roomPartialUpdate(@PathVariable("id") Long id,@RequestBody RoomDto roomDto) {
         RoomEntity existing = roomService.findOne(id)
         .orElseThrow(() -> new RuntimeException("Room not found"));
@@ -86,7 +99,7 @@ public class RoomController {
         return new ResponseEntity<>(updatedRoomDto,HttpStatus.OK);
     }
     
-    @PatchMapping(path = "/Rooms/members/{id}")
+    @PatchMapping(path = "/{id}/members")
     public ResponseEntity<RoomDto> addMembers(
         @PathVariable("id") Long id,
         @RequestBody List<UUID> memberIds){
@@ -94,14 +107,14 @@ public class RoomController {
             return new ResponseEntity<>(roomMapper.mapTo(updated), HttpStatus.OK);
             
         }
-    @DeleteMapping(path = "/Rooms/members/{id}")
+    @DeleteMapping(path = "/{id}/members")
     public ResponseEntity<Void> deleteMembers(
     @PathVariable("id")long id,
     @RequestBody List<UUID> userIds){
         roomService.deleteMembers(id, userIds);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @DeleteMapping(path = "/Rooms/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> deleteRoom(@PathVariable("id") long id){
         if(!roomService.isExists(id)){
             return new ResponseEntity<>( HttpStatus.NOT_FOUND);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project_z.demo.Mappers.Mapper;
@@ -31,6 +32,7 @@ import project_z.demo.services.UserService;
 
 
 @RestController
+@RequestMapping("/api/v1/titles")
 public class TitleController {
 @Autowired
 private Mapper<TitleEntity, TitleDto> titleMapper;
@@ -38,7 +40,7 @@ private Mapper<TitleEntity, TitleDto> titleMapper;
 private TitleService titleService;
 @Autowired
 private UserService userService;
-@PostMapping("/Titles/{userId}")
+@PostMapping("/{userId}")
 public ResponseEntity<List<TitleDto>> CreateTitle (
     @PathVariable("userId") UUID userId,
     @RequestBody TitleDto titleDto) {
@@ -52,7 +54,7 @@ public ResponseEntity<List<TitleDto>> CreateTitle (
 }
 
 
-@GetMapping("/Titles/{userId}")
+@GetMapping("/{userId}")
 public List<TitleDto> getTitleListByUserId(@PathVariable("userId") UUID userId){
     UserEntity userEntity = userService.findOne(userId).orElseThrow(
     ()-> new RuntimeException("user not found"));
@@ -63,7 +65,7 @@ public List<TitleDto> getTitleListByUserId(@PathVariable("userId") UUID userId){
     
 }
 
-@GetMapping(path = "/Titles/{userId}/WATCHED")
+@GetMapping(path = "/{userId}/WATCHED")
 public ResponseEntity<List<TitleDto>> getWatchedListByUserId(@PathVariable("userId") UUID userId){
         
         List<TitleEntity> titleEntitys = titleService.getWatchedList(userId);
@@ -74,7 +76,7 @@ public ResponseEntity<List<TitleDto>> getWatchedListByUserId(@PathVariable("user
         
         return new ResponseEntity<>(response, HttpStatus.OK);
 }
-@GetMapping(path = "/Titles/{userId}/PLANNED")
+@GetMapping(path = "/{userId}/PLANNED")
 public ResponseEntity<List<TitleDto>> getWatchListByUserId(@PathVariable("userId") UUID userId){
         
         List<TitleEntity> titleEntitys = titleService.getWatchList(userId);
@@ -85,7 +87,7 @@ public ResponseEntity<List<TitleDto>> getWatchListByUserId(@PathVariable("userId
         
         return new ResponseEntity<>(response, HttpStatus.OK);
 }
-@PutMapping(path = "/Titles/{titleId}")
+@PutMapping(path = "/{titleId}")
 public ResponseEntity<TitleDto> fullUpdateTitle (
     @PathVariable("titleId") int titleId,
     @RequestBody TitleDto titleDto
@@ -101,7 +103,7 @@ public ResponseEntity<TitleDto> fullUpdateTitle (
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 }
-@PatchMapping(path = "/Titles/{titleId}")
+@PatchMapping(path = "/{titleId}")
     public ResponseEntity<TitleDto> partialUpdate (
         @PathVariable("titleId") int titleId,@RequestBody TitleDto titleDto
         ){
@@ -112,7 +114,7 @@ public ResponseEntity<TitleDto> fullUpdateTitle (
         TitleEntity updatedTitleEntity  = titleService.partialUpdate(titleId, titleEntity);
         return new ResponseEntity<>(titleMapper.mapTo(updatedTitleEntity), HttpStatus.OK);
     }
-@DeleteMapping(path = "/Titles/{titleId}")
+@DeleteMapping(path = "/{titleId}")
     public ResponseEntity<Void> deleteTitleById(
         @PathVariable("titleId") Integer titleId
     ){
