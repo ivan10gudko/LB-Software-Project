@@ -1,5 +1,7 @@
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
+import AnimePageSceleton from "~/components/AnimePage/AnimePageSceleton";
+import ErrorAnimePage from "~/components/AnimePage/ErrorAnimePage";
 import MainComponent from "~/components/AnimePage/MainCompotent";
 import Sidebar from "~/components/AnimePage/Sidebar";
 import { getAnimeById } from "~/services/MyAnimeList";
@@ -16,12 +18,15 @@ const AnimePage : React.FC = () => {
             },
         });
 
-    if (isPending) return 'Loading...'
+    if (isPending) return <AnimePageSceleton />
 
-    if (error) return 'An error has occurred: ' + error.message
+    if (error){
+        console.error(error.message)
+        return <ErrorAnimePage />
+    }
 
     return (
-        <div className="sm:flex sm:gap-8 mx-auto my-8 w-[90%] max-w-[1200px]">
+        <div className="sm:flex sm:gap-8 mx-auto my-8 w-[90%] max-w-[1200px] h-fit">
             <Sidebar data={data} />
             <MainComponent data={data} />
         </div>

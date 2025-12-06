@@ -64,7 +64,7 @@ const Search: React.FC = () => {
 
             {isLoading && (
                 <div className="card-container">
-                    {[0, 1, 2, 3, 4, 5, 6, 7].map((v) => <SceletonCard key={v} />)}
+                    {[0, 1, 2, 3, 4].map((v) => <SceletonCard key={v} />)}
                 </div>
             )}
 

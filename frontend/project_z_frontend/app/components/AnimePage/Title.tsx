@@ -6,7 +6,7 @@ interface Props{
 const Title :React.FC<Props>  = ({children , originalTitle})=> {
     return (
     <div>
-        <h1 className="text-2xl my-1">
+        <h1 className="text-2xl my-1 ">
             {children}
         </h1>
         {

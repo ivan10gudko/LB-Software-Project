@@ -12,11 +12,11 @@ interface Props{
 }
 const MainComponent : React.FC<Props> = ({data}) => {
     return (
-    <div className="w-full h-screen font-light">
-        <Title originalTitle={data.title ?? ""}>{data.title_english}</Title>
+    <div className="w-full font-light">
+        <Title originalTitle={data.title ?? ""}>{data.title_english ?? data.title }</Title>
         <AnimeStat
-            year={data.year}
-            studio={data.studios[0].name}
+            year={data?.year}
+            studio={data.studios[0]?.name}
             duration={data.episodes && data.episodes !== 1 ? `${data.episodes} ep, ${data.duration?.replace("per ep","")} ` : data.duration}
             rating={data.score}
             scored_by={data.scored_by}
