@@ -40,7 +40,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         
         if (isValid) {
             String userId = jwtService.extractUsername(jwt);
-            System.out.println("👤 User ID: " + userId);
             
             List<GrantedAuthority> authorities = List.of(
                 new SimpleGrantedAuthority("ROLE_AUTHENTICATED")

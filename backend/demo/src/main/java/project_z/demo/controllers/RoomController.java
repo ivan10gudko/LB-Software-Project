@@ -63,10 +63,13 @@ public class RoomController {
        return response;
     }
 
-    @PostMapping
-    public ResponseEntity<RoomDto> createRoom(@RequestBody RoomDto roomDto) {
-
+    @PostMapping("/{userId}")
+    public ResponseEntity<RoomDto> createRoom(@PathVariable("userId") UUID userId, @RequestBody RoomDto roomDto) {
+        UserEntity owner = userService.findOne(userId).orElseThrow(
+            ()-> new RuntimeException("user not found ")
+        );
         RoomEntity roomEntity = roomMapper.mapFrom(roomDto);
+        roomEntity.setOwner(owner);
         RoomEntity savedRoom = roomService.save(roomEntity);
         RoomDto savedRoomDto = roomMapper.mapTo(savedRoom);
         return new ResponseEntity<>(savedRoomDto, HttpStatus.CREATED);

@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class RoomDto {
     private Long roomId;
     private String roomName;
+    private UserDto owner;
     private List<UserDto> members;
     private LocalDateTime createdAt;
 }
