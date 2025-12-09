@@ -19,7 +19,7 @@ export default [
     route(":id", "./pages/Room.tsx"), // /rooms/:id
     ]),
 
-    route("search", "./pages/Search.tsx"),
+    route("search", "./pages/SearchPage.tsx"),
 
     route("anime/:id", "./pages/AnimePage.tsx"),
     ]),
