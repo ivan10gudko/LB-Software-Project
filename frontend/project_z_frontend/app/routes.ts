@@ -10,8 +10,6 @@ export default [
     layout("./pages/MainLayout.tsx",[
     index("./pages/Home.tsx"),
 
-    route("auth", "./pages/Auth.tsx"),
-
     route("profile/:id", "./pages/Profile.tsx"),
 
     ...prefix("rooms", [
@@ -23,4 +21,5 @@ export default [
 
     route("anime/:id", "./pages/AnimePage.tsx"),
     ]),
+    route("auth", "./pages/Auth.tsx"),
 ] satisfies RouteConfig;
