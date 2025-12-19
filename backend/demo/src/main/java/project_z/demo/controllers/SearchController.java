@@ -24,6 +24,7 @@ public class SearchController {
     @GetMapping(path = "/api/v1/search")
     public String Search(@RequestParam("q") String text, @RequestParam("page") int page) {
          String translatedService = translationService.translateToEnglish(text);
+         
          String response = titleSearchService.searchTitle(translatedService, page);
          return response;
     }
