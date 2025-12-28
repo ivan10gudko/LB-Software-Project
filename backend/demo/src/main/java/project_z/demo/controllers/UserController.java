@@ -72,6 +72,15 @@ public class UserController {
         UserDto response = userMapper.mapTo(foundUser);
         return response;
     }
+
+    @GetMapping(path = "/{nameTag}/checkNameTag")
+    public boolean isNameTagIsAlreadyTaken(@PathVariable("nameTag")String nameTag) {
+        if(userRepository.existsByNameTag(nameTag)){
+            return false;
+        }
+        return true;
+    }
+    
     @GetMapping(path = "/name/{name}")
     public List<UserDto> findUsersByName(@PathVariable("name")String name) {
         List<UserEntity> userEntitys = userService.findByName(name);
