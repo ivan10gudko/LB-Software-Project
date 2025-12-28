@@ -88,11 +88,13 @@ Input: "ВанПіс"
         try {
             Map response = restTemplate.postForObject(url, requestBody, Map.class);
             if(response != null && response.containsKey("translatedText")){
+                System.out.println(response.get("translatedText"));
                 return (String) response.get("translatedText");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("xuy");
         return text;
     }*/
         
