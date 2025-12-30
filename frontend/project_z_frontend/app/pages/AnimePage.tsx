@@ -5,7 +5,7 @@ import ErrorAnimePage from "~/components/AnimePage/ErrorAnimePage";
 import MainComponent from "~/components/AnimePage/MainCompotent";
 import Sidebar from "~/components/AnimePage/Sidebar";
 import { getAnimeById } from "~/services/MyAnimeList";
-import type { Anime } from "~/services/MyAnimeList.types";
+import type { Anime } from "~/types/MyAnimeList.types";
 
 const AnimePage : React.FC = () => {
     let { id } = useParams();

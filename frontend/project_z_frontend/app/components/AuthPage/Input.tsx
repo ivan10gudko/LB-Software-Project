@@ -1,43 +1,68 @@
-import React from 'react';
+import React, { useId, useState } from 'react';
 
 interface InputProps {
     children?: string;
     name: string;
+    value: string | number;
     type?: React.HTMLInputTypeAttribute;
-    defaultValue?: string | number;
     pattern?: string;
-    handleChange: (value: string) => void;
+    onChange: (value: string) => void;
     error?: string | boolean | null;
+    isValid?:"valid"|"neutral"|"invalid"
+    onBlur?: (value: string) => void;
 }
 
 const Input: React.FC<InputProps> = ({
     children,
     name,
+    value,
     type = "text",
-    defaultValue,
     pattern,
-    handleChange,
+    onChange,
+    onBlur,
     error,
+    isValid="neutral"
 }) => {
+
+    const id = useId();
+
+    const isError = error || isValid === "invalid";
+    const isSuccess = isValid === "valid";
+
+    const getBorderColor = () => {
+        if (isError) return "border-red-500 text-red-500 focus:border-red-400";
+        if (isSuccess) return "border-green-400 text-green-400 focus:border-green-300";
+        return "border-gray-300 focus:border-amber-200";
+    };
+
+    const getLabelColor = () => {
+        if (isError) return "text-red-500 peer-focus:text-red-300";
+        if (isSuccess) return "text-green-400 peer-focus:text-green-300";
+        return "text-slate-600 peer-focus:text-amber-300";
+    };
+
     return (
-        <div className="relative">
+        <div className="relative my-5">
             <input
+                id={id}
                 className={
-                    "peer p-3 border-gray-300 border rounded-md w-full my-3 placeholder:text-sm placeholder:text-slate-600 focus:outline-0 focus:border-amber-200" +
-                    (error ? "text-red-500 border-red-500" : "")
-                }
+                    `peer p-3 border-gray-300 border rounded-md w-full placeholder:text-sm placeholder:text-slate-600 focus:outline-0 ${getBorderColor()}`
+            }
                 type={type}
                 name={name}
-                defaultValue={defaultValue}
                 placeholder={children}
                 pattern={pattern}
-                onChange={(e) => handleChange(e.target.value)}
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                onBlur={(e) => {
+                    if (onBlur) onBlur(e.target.value);
+                }}
             />
-            <span className='block peer-placeholder-shown:hidden absolute text-xs peer-focus:text-amber-300 top-0 left-4 bg-white px-2'>{name}</span>
+            <label htmlFor={id} className={`block peer-placeholder-shown:hidden absolute text-xs -top-2 left-4 bg-white px-2 ${getLabelColor()}`}>{name}</label>
 
-            {error && typeof error === 'string' && (
-                <p className="text-red-500 absolute top-full bg-white w-full py-3 px-4 rounded border z-30 border-red-500">
-                    ⛔ {error}
+            {isError && (
+                <p className="text-red-500 w-full px-4 my-1 text-sm ">
+                    {typeof error === 'string'? error:"Invalid format"}
                 </p>
             )}
         </div>

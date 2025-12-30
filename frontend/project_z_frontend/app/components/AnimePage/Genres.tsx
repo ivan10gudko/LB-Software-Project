@@ -1,5 +1,5 @@
 import type React from "react";
-import type { Genre } from "~/services/MyAnimeList.types";
+import type { Genre } from "~/types/MyAnimeList.types";
 import Badge from "../Badge";
 
 import SellOutlinedIcon from '@mui/icons-material/SellOutlined';

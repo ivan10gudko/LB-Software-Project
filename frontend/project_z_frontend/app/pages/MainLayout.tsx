@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { queryClient } from "~/lib/queryClient";
 
 function MainLayout() {
+    
 
     return (
         <QueryClientProvider client={queryClient}>

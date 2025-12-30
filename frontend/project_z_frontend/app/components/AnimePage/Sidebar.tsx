@@ -1,4 +1,4 @@
-import type { Anime } from "~/services/MyAnimeList.types";
+import type { Anime } from "~/types/MyAnimeList.types";
 import type { AnimeCardType } from "../Card/AnimeCard";
 import Button from "../Button";
 import AddToWatchedCard from "../Card/AddToWathedCard";

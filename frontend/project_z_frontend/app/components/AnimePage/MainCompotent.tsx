@@ -1,4 +1,4 @@
-import type { Anime } from "~/services/MyAnimeList.types";
+import type { Anime } from "~/types/MyAnimeList.types";
 import Title from "./Title";
 import AnimeStat from "./AnimeStat";
 import Genres from "./Genres";

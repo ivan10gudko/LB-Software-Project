@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import ConfirmEmail from "~/components/AuthPage/ConfirmEmail";
 import LoginForm from "~/components/AuthPage/Login";
 import SignupForm from "~/components/AuthPage/Signup";
 import Logo from "~/components/Logo";

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Anime, SeacrchResponse } from './MyAnimeList.types';
+import type { Anime, SeacrchResponse } from '../types/MyAnimeList.types';
 import type { AnimeCardType } from '~/components/Card/AnimeCard';
 
 export async function getTopAnimeList(): Promise<AnimeCardType[]> {

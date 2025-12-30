@@ -6,7 +6,7 @@ import Date from "../Date";
 import HeroDescription from "./HeroDescription";
 import { Link, Navigate } from "react-router";
 import Button from "../Button";
-import type { Anime } from "~/services/MyAnimeList.types";
+import type { Anime } from "~/types/MyAnimeList.types";
 
 const HeroSection: React.FC<{}> = () => {
     const { isPending, error, data } = useSuspenseQuery<Anime>({
@@ -23,6 +23,7 @@ const HeroSection: React.FC<{}> = () => {
 return (
     <div className="w-full flex h-[88vh] flex-row-reverse relative">
         <img
+            loading="lazy"
             src={data.trailer?.images?.maximum_image_url ?? "/placeholder.jpg"}
             alt={`Top Rated Anime: ${data.title_english}`}
         />

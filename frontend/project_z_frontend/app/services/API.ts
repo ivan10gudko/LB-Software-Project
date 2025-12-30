@@ -1,5 +1,5 @@
 import type { AnimeCardType } from "~/components/Card/AnimeCard";
-import type { SeacrchResponse } from "./MyAnimeList.types";
+import type { SeacrchResponse } from "../types/MyAnimeList.types";
 import axios from "axios";
 
 export async function getAnimeSearch(q:string, page: number = 1):Promise<SeacrchResponse<AnimeCardType>>{
@@ -50,3 +50,7 @@ try {
         };
 }
 };
+
+export async function checkFieldAvailability(name: string, value: string): Promise<boolean>{
+    return false;
+}
