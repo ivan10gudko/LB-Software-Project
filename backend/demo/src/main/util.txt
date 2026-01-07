@@ -3,6 +3,7 @@ json to post
 {
     "userId": "c91438ea-8288-4584-898b-c8a6c33a8e07",
     "name": "Genadiy",
+    "nameTag": "string",
     "description": "Natural",
     "img": 52,
      "friendsList" : [],

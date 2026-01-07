@@ -20,8 +20,8 @@ public class SecurityConfig {
             .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
             .requestMatchers("/api/v1/auth/**").permitAll()
             .requestMatchers("/api/v1/users/*/checkNameTag").permitAll()
-            .anyRequest().authenticated()
-        ).csrf(csrf -> csrf.disable())
+            .anyRequest().authenticated() 
+        ).csrf(csrf -> csrf.disable()) 
         .sessionManagement(session -> 
             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

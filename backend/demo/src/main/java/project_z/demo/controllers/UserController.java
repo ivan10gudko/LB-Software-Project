@@ -1,10 +1,10 @@
 package project_z.demo.controllers;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -82,14 +82,12 @@ public class UserController {
     }
     
     @GetMapping(path = "/name/{name}")
-    public List<UserDto> findUsersByName(@PathVariable("name")String name) {
-        List<UserEntity> userEntitys = userService.findByName(name);
-        List<UserDto> response = new ArrayList<>();
-        for(UserEntity u : userEntitys){
-            UserDto d = userMapper.mapTo(u);
-            response.add(d);
+    public ResponseEntity<List<UserDto>> findUsersByName(@PathVariable("name")String name) {
+        List<UserDto> response = userService.findByName(name).stream().map(userMapper::mapTo).collect(Collectors.toList());
+        if(response.isEmpty()){
+            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
         }
-        return response;
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     

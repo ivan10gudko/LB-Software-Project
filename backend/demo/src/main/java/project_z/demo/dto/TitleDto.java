@@ -1,6 +1,7 @@
 package project_z.demo.dto;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -15,10 +16,10 @@ import project_z.demo.entity.TitleEntity.titleStatus;
 @Builder
 public class TitleDto {
  @Id
-    private Integer titleId;
+    private Long titleId;
     private int apiTitleId;
     private String titleName;
-    private float titleRating;
+    private Map<String, Float> rating;
     private titleStatus status;
     private LocalDateTime createdAt;
 }

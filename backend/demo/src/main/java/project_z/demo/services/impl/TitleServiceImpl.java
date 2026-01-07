@@ -35,16 +35,16 @@ public List<TitleEntity> findAll(){
         .collect(Collectors.toList());
 }
 @Override
-public Optional<TitleEntity> findOne(Integer titleId){
+public Optional<TitleEntity> findOne(Long titleId){
     return titleRepository.findById(titleId);
 }
 
 @Override
-public boolean isExists(Integer titleId){
+public boolean isExists(Long titleId){
     return titleRepository.existsById(titleId);
 }
 @Override
-public TitleEntity partialUpdate(Integer titleId, TitleEntity source) {
+public TitleEntity partialUpdate(Long titleId, TitleEntity source) {
     return titleRepository.findById(titleId)
         .map(target -> {
             beanUtilsHelper.copyNonNullProperties(source, target);
@@ -53,7 +53,7 @@ public TitleEntity partialUpdate(Integer titleId, TitleEntity source) {
         .orElseThrow(() -> new RuntimeException("User not found"));
 }
 @Override
-public void deleteById(Integer Id){
+public void deleteById(Long Id){
     titleRepository.deleteById(Id);
 }
 @Override
@@ -71,7 +71,6 @@ public List<TitleEntity> getWatchedList(UUID userId){
     () -> new RuntimeException("user not found"));
     List<TitleEntity> response = userEntity.getTitleList().stream().filter(title -> title.getStatus() == TitleEntity.titleStatus.WATCHED).toList();
     return response;
-    
 }
 @Override
 public List<TitleEntity> getWatchList(UUID userId){
