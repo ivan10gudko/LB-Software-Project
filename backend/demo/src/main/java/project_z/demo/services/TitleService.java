@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import project_z.demo.entity.SeasonEntity;
 import project_z.demo.entity.TitleEntity;
 
 public interface  TitleService {
@@ -16,4 +17,5 @@ public interface  TitleService {
     List<TitleEntity> addTitle(TitleEntity titleEntity,  UUID userId);
     List<TitleEntity> getWatchedList(UUID userid);
     List<TitleEntity> getWatchList(UUID userid);
+    TitleEntity addSeason(SeasonEntity seasonEntity, TitleEntity titleEntity);
 }

@@ -1,11 +1,14 @@
 package project_z.demo.entity;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,8 +36,10 @@ public class SeasonEntity {
     private Long seasonId;
     private String name;
     private Float rating;
+    @Enumerated(EnumType.STRING)
     private titleStatus status;
     @ManyToOne
     @JoinColumn( name = "TitleId")
+    @JsonBackReference
     private TitleEntity title;
 }

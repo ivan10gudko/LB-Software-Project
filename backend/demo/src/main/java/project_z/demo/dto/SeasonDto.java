@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import project_z.demo.entity.TitleEntity;
-
+import project_z.demo.entity.TitleEntity.titleStatus;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,5 +18,6 @@ public class SeasonDto {
     private Long seasonId;
     private String name;
     private Float rating;
+    private titleStatus status;
     private TitleEntity title;
 }

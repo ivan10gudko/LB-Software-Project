@@ -10,19 +10,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project_z.demo.JavaUtil.BeanUtilsHelper;
+import project_z.demo.entity.SeasonEntity;
 import project_z.demo.entity.TitleEntity;
 import project_z.demo.entity.UserEntity;
 import project_z.demo.repositories.TitleRepository;
 import project_z.demo.repositories.UserRepository;
+import project_z.demo.services.SeasonService;
 import project_z.demo.services.TitleService;
+
 @Service
 public class TitleServiceImpl implements TitleService {
+
+    private final SeasonService seasonService;
     @Autowired
     private BeanUtilsHelper beanUtilsHelper;
     @Autowired
     private TitleRepository titleRepository;
     @Autowired
     private UserRepository userRepository;
+
+    TitleServiceImpl(SeasonService seasonService) {
+        this.seasonService = seasonService;
+    }
 @Override
 public TitleEntity createTitle(TitleEntity title){
     return titleRepository.save(title);
@@ -79,5 +88,11 @@ public List<TitleEntity> getWatchList(UUID userId){
     List<TitleEntity> response = userEntity.getTitleList().stream().filter(title -> title.getStatus() == TitleEntity.titleStatus.PLANNED).toList();
     return response;
     
+}
+@Override
+public TitleEntity addSeason(SeasonEntity seasonEntity, TitleEntity titleEntity){
+    seasonEntity.setTitle(titleEntity);
+    seasonService.save(seasonEntity);
+    return titleEntity;
 }
 }
